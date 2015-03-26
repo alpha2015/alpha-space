@@ -6,7 +6,7 @@
 <c:if test="${not empty sessionUserId}">
 	<c:redirect url="/groups.jsp" />
 </c:if>
-<title>스터디의 시작, 기네스</title>
+<title>스터디의 시작, 수정된 기네스</title>
 <meta charset="utf-8">
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
