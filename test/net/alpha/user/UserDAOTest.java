@@ -1,11 +1,7 @@
 package net.alpha.user;
 
-import static org.junit.Assert.*;
-
-import java.sql.Connection;
-
-import net.alpha.user.User;
-import net.alpha.user.UserDAO;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +13,6 @@ public class UserDAOTest {
 	@Before
 	public void setup() {
 		userDao = new UserDAO();
-	}
-
-	@Test
-	public void connection() {
-		Connection con = userDao.getConnection();
-		assertNotNull(con);
 	}
 	
 	@Test

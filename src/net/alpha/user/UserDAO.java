@@ -37,6 +37,11 @@ public class UserDAO {
 				pstmt.setString(3, user.getName());
 				pstmt.setString(4, user.getEmail());
 			}
+
+			@Override
+			public User mapRow(ResultSet rs) throws SQLException {
+				return null;
+			}
 			
 		}; 
 		String sql = "insert into USERS values(?,?,?,?)";
@@ -44,38 +49,28 @@ public class UserDAO {
 	}
 
 	public User findByUserId(String userId) throws SQLException {
-		String sql = "select * from USERS where userId = ?";
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-
-			rs = pstmt.executeQuery();
-
-			if (!rs.next()) {
-				return null;
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+			
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, userId);
 			}
 
-			return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
-					rs.getString("email"));
-		} finally {
-			if (rs != null) {
-				rs.close();
-			}
+			@Override
+			public User mapRow(ResultSet rs) throws SQLException {
+				if (!rs.next()) {
+					return null;
+				}
 
-			if (pstmt != null) {
-				pstmt.close();
+				return new User(rs.getString("userId"),
+						rs.getString("password"),
+						rs.getString("name"),
+						rs.getString("email"));
 			}
-
-			if (conn != null) {
-				conn.close();
-			}
-		}
-
+		};
+		
+		String sql = "select * from USERS where userId = ?";;
+		return (User)jdbcTemplate.executeQuery(sql);
 	}
 
 	public void removeUser(String userId) throws SQLException {
@@ -83,6 +78,11 @@ public class UserDAO {
 			@Override
 			public void setParameters(PreparedStatement pstmt) throws SQLException {
 				pstmt.setString(1, userId);
+			}
+
+			@Override
+			public User mapRow(ResultSet rs) throws SQLException {
+				return null;
 			}
 		};
 		String sql = "delete from USERS where userId = ?";
@@ -97,6 +97,11 @@ public class UserDAO {
 				pstmt.setString(2, user.getName());
 				pstmt.setString(3, user.getEmail());
 				pstmt.setString(4, user.getUserId());
+			}
+
+			@Override
+			public User mapRow(ResultSet rs) throws SQLException {
+				return null;
 			}
 		}; 
 		String sql = "update USERS set password = ?, name = ?, email = ? where userId = ?";
