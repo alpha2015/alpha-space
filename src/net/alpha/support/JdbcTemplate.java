@@ -5,15 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class JdbcTemplate {
-
-	public void executeUpdate(String sql) throws SQLException {
+public class JdbcTemplate {
+	public void executeUpdate(String sql, PreparedStatementSetter pss) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			setParameters(pstmt);
+			pss.setParameters(pstmt);
 
 			pstmt.executeUpdate();
 		} finally {
@@ -27,18 +26,21 @@ public abstract class JdbcTemplate {
 		}
 	}
 	
-	public Object executeQuery(String sql) throws SQLException {
+	public Object executeQuery(String sql, PreparedStatementSetter pss, RowMapper rm) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			setParameters(pstmt);
+			pss.setParameters(pstmt);
 
 			rs = pstmt.executeQuery();
+			if (!rs.next()) {
+				return null;
+			}
 
-			return mapRow(rs);
+			return rm.mapRow(rs);
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -55,7 +57,4 @@ public abstract class JdbcTemplate {
 
 	}
 	
-	public abstract Object mapRow(ResultSet rs) throws SQLException;
-	
-	public abstract void setParameters(PreparedStatement pstmt) throws SQLException;
 }
