@@ -28,7 +28,7 @@ public class UpdateFormUserServlet extends HttpServlet {
 			resp.sendRedirect("/");
 			return;
 		}
-		logger.debug("User Id : " + userId);
+		logger.debug("User Id : {}",userId);
 		UserDAO userDao = new UserDAO();
 		try {
 			User user = userDao.findByUserId(userId);
