@@ -11,8 +11,8 @@
 	  
 	<header class="jumbotron subhead" id="overview">
 	<div class="container">
-		<h1>SLiPP</h1>
-		<p class="lead">Sustaninable Life, Programming, Programmer</p>
+		<h1>Alpha</h1>
+		<p class="lead">Web 학습 공간</p>
 	</div>
 	</header>     
     

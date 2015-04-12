@@ -6,14 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcTemplate {
-	public void executeUpdate(String sql, PreparedStatementSetter pss) throws SQLException {
+	public void executeUpdate(String sql, Object... parameters) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pss.setParameters(pstmt);
 
+			for (int i = 0; i < parameters.length; i++) {
+				pstmt.setObject(i + 1, parameters[i]);
+			}
 			pstmt.executeUpdate();
 		} finally {
 			if (pstmt != null) {
@@ -25,15 +27,18 @@ public class JdbcTemplate {
 			}
 		}
 	}
-	
-	public Object executeQuery(String sql, PreparedStatementSetter pss, RowMapper rm) throws SQLException {
+
+	public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameters) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pss.setParameters(pstmt);
+
+			for (int i = 0; i < parameters.length; i++) {
+				pstmt.setObject(i + 1, parameters[i]);
+			}
 
 			rs = pstmt.executeQuery();
 			if (!rs.next()) {
@@ -56,5 +61,5 @@ public class JdbcTemplate {
 		}
 
 	}
-	
+
 }
