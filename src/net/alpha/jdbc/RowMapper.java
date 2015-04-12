@@ -1,4 +1,4 @@
-package net.alpha.support;
+package net.alpha.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

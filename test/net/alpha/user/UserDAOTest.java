@@ -1,7 +1,8 @@
 package net.alpha.user;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,12 @@ public class UserDAOTest {
 		userDao.updateUser(updateUser);
 		dbUser = userDao.findByUserId(updateUser.getUserId());
 		assertEquals(updateUser, dbUser);
+	}
+	
+	@Test
+	public void findAllUser() throws Exception {
+		List<User> list = userDao.findAllUser();
+		System.out.println(list);
 	}
 
 	@Test

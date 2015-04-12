@@ -2,7 +2,6 @@ package net.alpha.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,31 +17,27 @@ public class ApiFindUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userId = req.getParameter("userId");
 		if (userId == null) {
 			resp.sendRedirect("/");
 			return;
 		}
-		
+
 		UserDAO userDao = new UserDAO();
-		try {
-			User user = userDao.findByUserId(userId);
-			if (user == null) {
-				return;
-			}
-			
-			final GsonBuilder builder = new GsonBuilder();
-		    builder.excludeFieldsWithoutExposeAnnotation();
-		    final Gson gson = builder.create();
-		    
-			String jsonData = gson.toJson(user);
-			resp.setContentType("application/json;charset=UTF-8");
-			
-			PrintWriter out = resp.getWriter();
-			out.print(jsonData);
-		} catch (SQLException e) {
+		User user = userDao.findByUserId(userId);
+		if (user == null) {
+			return;
 		}
+
+		final GsonBuilder builder = new GsonBuilder();
+		builder.excludeFieldsWithoutExposeAnnotation();
+		final Gson gson = builder.create();
+
+		String jsonData = gson.toJson(user);
+		resp.setContentType("application/json;charset=UTF-8");
+
+		PrintWriter out = resp.getWriter();
+		out.print(jsonData);
 	}
 }

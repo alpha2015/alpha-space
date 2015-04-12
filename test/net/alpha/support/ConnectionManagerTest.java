@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.sql.Connection;
 
+import net.alpha.jdbc.ConnectionManager;
+
 import org.junit.Test;
 
 public class ConnectionManagerTest {

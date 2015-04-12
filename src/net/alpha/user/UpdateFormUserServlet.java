@@ -1,7 +1,6 @@
 package net.alpha.user;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,25 +17,21 @@ import org.slf4j.LoggerFactory;
 public class UpdateFormUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = LoggerFactory.getLogger(UpdateFormUserServlet.class);
-	
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		if (userId == null) {
 			resp.sendRedirect("/");
 			return;
 		}
-		logger.debug("User Id : {}",userId);
+		logger.debug("User Id : {}", userId);
 		UserDAO userDao = new UserDAO();
-		try {
-			User user = userDao.findByUserId(userId);
-			req.setAttribute("isUpdate", true);
-			req.setAttribute("user", user);
-			RequestDispatcher rd = req.getRequestDispatcher("/form.jsp");
-			rd.forward(req, resp);
-		} catch (SQLException e) {
-		}
+		User user = userDao.findByUserId(userId);
+		req.setAttribute("isUpdate", true);
+		req.setAttribute("user", user);
+		RequestDispatcher rd = req.getRequestDispatcher("/form.jsp");
+		rd.forward(req, resp);
 	}
 }

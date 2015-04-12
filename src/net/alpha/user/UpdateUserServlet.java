@@ -2,7 +2,6 @@ package net.alpha.user;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -15,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import org.apache.commons.beanutils.BeanUtilsBean;
-
 import net.alpha.support.MyValidatorFactory;
+
+import org.apache.commons.beanutils.BeanUtilsBean;
 
 @WebServlet("/users/update")
 public class UpdateUserServlet extends HttpServlet {
@@ -56,10 +55,7 @@ public class UpdateUserServlet extends HttpServlet {
 		}
 		
 		UserDAO userDAO = new UserDAO();
-		try {
-			userDAO.updateUser(user);
-		} catch (SQLException e) {
-		}
+		userDAO.updateUser(user);
 		
 		response.sendRedirect("/");
 	}
