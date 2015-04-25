@@ -1,4 +1,4 @@
-package net.alpha.user;
+package net.alpha.user.web;
 
 import java.io.IOException;
 
@@ -10,8 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.alpha.user.User;
+import net.alpha.user.UserDAO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import core.support.SessionUtils;
 
 @WebServlet("/users/updateForm")
 public class UpdateFormUserServlet extends HttpServlet {

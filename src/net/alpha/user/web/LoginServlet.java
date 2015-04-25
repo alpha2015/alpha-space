@@ -1,4 +1,4 @@
-package net.alpha.user;
+package net.alpha.user.web;
 
 import java.io.IOException;
 
@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.alpha.user.PasswordMismatchException;
+import net.alpha.user.User;
+import net.alpha.user.UserNotFoundException;
 
 @WebServlet("/users/login")
 public class LoginServlet extends HttpServlet {

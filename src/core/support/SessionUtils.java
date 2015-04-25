@@ -1,4 +1,4 @@
-package net.alpha.user;
+package core.support;
 
 import javax.servlet.http.HttpSession;
 

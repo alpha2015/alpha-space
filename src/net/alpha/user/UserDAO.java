@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.alpha.jdbc.JdbcTemplate;
-import net.alpha.jdbc.RowMapper;
+import core.jdbc.JdbcTemplate;
+import core.jdbc.RowMapper;
 
 public class UserDAO {
 	public void addUser(User user) {

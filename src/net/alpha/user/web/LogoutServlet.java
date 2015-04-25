@@ -1,4 +1,4 @@
-package net.alpha.user;
+package net.alpha.user.web;
 
 import java.io.IOException;
 
