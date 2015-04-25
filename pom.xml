@@ -7,10 +7,19 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<tomcat.version>8.0.15</tomcat.version>
+		<tomcat.version>8.0.20</tomcat.version>
+		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
+		<!-- Spring Framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
