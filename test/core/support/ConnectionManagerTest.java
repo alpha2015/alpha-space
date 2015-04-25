@@ -1,4 +1,4 @@
-package net.alpha.support;
+package core.support;
 
 import static org.junit.Assert.assertNotNull;
 

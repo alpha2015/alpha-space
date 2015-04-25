@@ -1,7 +1,5 @@
 package net.alpha.user;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +14,9 @@ public class UserDAO {
 	}
 
 	public User findByUserId(String userId) {
-		RowMapper<User> rm = new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs) throws SQLException {
-				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
-						rs.getString("email"));
-			}
-		};
+		RowMapper<User> rm = rs -> new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
+				rs.getString("email"));
+
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "select * from USERS where userId = ?";
 		;
@@ -30,17 +24,15 @@ public class UserDAO {
 	}
 
 	public List<User> findAllUser() {
-		RowMapper<List<User>> rm = new RowMapper<List<User>>() {
-			@Override
-			public List<User> mapRow(ResultSet rs) throws SQLException {
-				List<User> list = new ArrayList<User>();
-				while (rs.next()) {
-					list.add(new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs
-							.getString("email")));
-				}
-				return list;
+		RowMapper<List<User>> rm = rs -> {
+			List<User> list = new ArrayList<User>();
+			while (rs.next()) {
+				list.add(new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs
+						.getString("email")));
 			}
+			return list;
 		};
+
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "select * from USERS";
 		;
