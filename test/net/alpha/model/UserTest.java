@@ -1,22 +1,22 @@
-package net.alpha.user;
+package net.alpha.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.alpha.user.PasswordMismatchException;
-import net.alpha.user.User;
-import net.alpha.user.UserDAO;
-import net.alpha.user.UserNotFoundException;
+import net.alpha.model.PasswordMismatchException;
+import net.alpha.model.User;
+import net.alpha.model.UserDao;
+import net.alpha.model.UserNotFoundException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest {
 	public static User TEST_USER = new User("userId", "password", "name", "javajigi@slipp.net");
-	private UserDAO userDao;
+	private UserDao userDao;
 	
 	@Before
 	public void setup() throws Exception {
-		userDao = new UserDAO();
+		userDao = new UserDao();
 		userDao.removeUser(TEST_USER.getUserId());
 	}
 

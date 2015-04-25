@@ -1,4 +1,4 @@
-package net.alpha.user;
+package net.alpha.model;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -83,7 +83,7 @@ public class User {
 	}
 	
 	public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
-		UserDAO userDAO = new UserDAO();
+		UserDao userDAO = new UserDao();
 		User user = userDAO.findByUserId(userId);
 		if (user == null) {
 			throw new UserNotFoundException();

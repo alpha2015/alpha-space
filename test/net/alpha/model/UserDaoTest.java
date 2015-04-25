@@ -1,20 +1,22 @@
-package net.alpha.user;
+package net.alpha.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class UserDAOTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:/applicationContext.xml")
+public class UserDaoTest {
 
-	private UserDAO userDao;
-
-	@Before
-	public void setup() {
-		userDao = new UserDAO();
-	}
+	@Autowired
+	private UserDao userDao;
 
 	@Test
 	public void crud() throws Exception {
@@ -36,12 +38,11 @@ public class UserDAOTest {
 		System.out.println(list);
 	}
 
-	@Test
+	@Test(expected = EmptyResultDataAccessException.class)
 	public void 존재하지_않는_사용자_조회() throws Exception {
 		User user = UserTest.TEST_USER;
 		userDao.removeUser(user.getUserId());
-		User dbUser = userDao.findByUserId(user.getUserId());
-		assertNull(dbUser);
+		userDao.findByUserId(user.getUserId());
 	}
 
 }

@@ -1,4 +1,4 @@
-package net.alpha.user.web;
+package net.alpha.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -6,25 +6,27 @@ import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import net.alpha.user.User;
-import net.alpha.user.UserDAO;
+import net.alpha.model.User;
+import net.alpha.model.UserDao;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import core.support.MyValidatorFactory;
 
-@WebServlet("/users/create")
-public class CreateUserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	@Override
+@Controller
+public class CreateUserServlet {
+	@Autowired
+	UserDao userDao;
+	
+	@RequestMapping("/users/create")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
 		User user = new User();
@@ -43,7 +45,7 @@ public class CreateUserServlet extends HttpServlet {
 			return;
 		}
 
-		UserDAO userDAO = new UserDAO();
+		UserDao userDAO = new UserDao();
 		userDAO.addUser(user);
 
 		response.sendRedirect("/");

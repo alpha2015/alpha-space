@@ -1,4 +1,4 @@
-package net.alpha.user;
+package net.alpha.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+
+import net.alpha.model.User;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -62,7 +64,8 @@ public class UserValidatorTest {
 		Iterator<ConstraintViolation<User>> violations = constraintViolations.iterator();
 		while (violations.hasNext()) {
 			ConstraintViolation<User> each = violations.next();
-			logger.debug(constraintViolations.iterator().next().getMessage());
+//			logger.debug(constraintViolations.iterator().next().getMessage());
+			logger.debug(each.getMessage());
 		}
 	}
 }

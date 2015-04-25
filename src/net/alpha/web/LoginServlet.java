@@ -1,30 +1,30 @@
-package net.alpha.user.web;
+package net.alpha.web;
 
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.alpha.user.PasswordMismatchException;
-import net.alpha.user.User;
-import net.alpha.user.UserNotFoundException;
+import net.alpha.model.PasswordMismatchException;
+import net.alpha.model.User;
+import net.alpha.model.UserNotFoundException;
 
-@WebServlet("/users/login")
-public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class LoginServlet {
 	public static final String SESSION_USER_ID = "userId";
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@RequestMapping
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
-		
+
 		try {
 			User.login(userId, password);
 			HttpSession session = request.getSession();
@@ -37,8 +37,8 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	private void forwardJSP(HttpServletRequest request,
-			HttpServletResponse response, String errorMessage) throws ServletException, IOException {
+	private void forwardJSP(HttpServletRequest request, HttpServletResponse response, String errorMessage)
+			throws ServletException, IOException {
 		request.setAttribute("errorMessage", errorMessage);
 		RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
 		rd.forward(request, response);

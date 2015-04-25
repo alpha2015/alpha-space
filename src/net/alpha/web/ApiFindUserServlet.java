@@ -1,33 +1,35 @@
-package net.alpha.user.web;
+package net.alpha.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.alpha.user.User;
-import net.alpha.user.UserDAO;
+import net.alpha.model.User;
+import net.alpha.model.UserDao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/api/users/find")
-public class ApiFindUserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	@Override
+@Controller
+public class ApiFindUserServlet {
+	@Autowired
+	UserDao userDao;
+	
+	@RequestMapping("/api/users/find")
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userId = req.getParameter("userId");
 		if (userId == null) {
 			resp.sendRedirect("/");
-			return;
 		}
 
-		UserDAO userDao = new UserDAO();
+		UserDao userDao = new UserDao();
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			return;

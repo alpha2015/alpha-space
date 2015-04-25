@@ -1,8 +1,4 @@
-package core.support;
-
-import static org.junit.Assert.assertNotNull;
-
-import javax.sql.DataSource;
+package net.alpha.diStudy;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,15 +7,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/applicationContext.xml")
-public class ConnectionManagerTest {
-
-	@Autowired
-	private DataSource dataSource;
+@ContextConfiguration("classpath:/di.xml")
+public class MessageRendererTest {
 	
+	@Autowired
+	private MessageRenderer messageRenderer;
+
 	@Test
-	public void dataSource() {
-		assertNotNull(dataSource);
+	public void renderer() {
+		messageRenderer.render();
 	}
 
 }

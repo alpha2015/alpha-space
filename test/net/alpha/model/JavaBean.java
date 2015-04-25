@@ -1,4 +1,4 @@
-package net.alpha.user;
+package net.alpha.model;
 
 public class JavaBean {
 
