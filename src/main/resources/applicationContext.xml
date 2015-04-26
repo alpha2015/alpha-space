@@ -5,10 +5,14 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	<context:property-placeholder location="classpath*:application-properties.xml" />
+	
+	<!-- PostConstruct annotation을 사용해서 초기화 작업을 하려면 필요. -->
+	<!-- <context:annotation-config /> -->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="${database.driverClassName}" p:url="${database.url}"
 		p:username="${database.username}" p:password="${database.password}" />
+		
 	<bean id="UserDao" class="net.alpha.model.UserDao"
 		p:dataSource-ref="dataSource" />
 		

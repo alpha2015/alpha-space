@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LogoutServlet {
 	@RequestMapping("/users/logout")
-	protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
+	protected String doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("userId");
-		response.sendRedirect("/");
+		return "redirect:/";
 	}
 }

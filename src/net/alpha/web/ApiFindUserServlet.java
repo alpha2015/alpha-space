@@ -19,17 +19,16 @@ import com.google.gson.GsonBuilder;
 
 @Controller
 public class ApiFindUserServlet {
+
 	@Autowired
-	UserDao userDao;
-	
+	private UserDao userDao;
+
 	@RequestMapping("/api/users/find")
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userId = req.getParameter("userId");
 		if (userId == null) {
 			resp.sendRedirect("/");
 		}
-
-		UserDao userDao = new UserDao();
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			return;

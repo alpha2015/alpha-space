@@ -4,10 +4,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.annotations.Expose;
 
 public class User {
+	
+	@Autowired
+	private static UserDao userDao;
+	
 	@Expose
 	@NotNull
 	@Size(min = 4, max = 12)
@@ -16,8 +21,7 @@ public class User {
 	@Expose(serialize = false)
 	@NotNull
 	@Size(min = 4, max = 12)
-	private
-	String password;
+	private String password;
 	@Expose
 	@NotNull
 	@Size(min = 2, max = 10)
@@ -28,7 +32,6 @@ public class User {
 	private String email;
 	
 	public User(String userId, String password, String name, String email) {
-		super();
 		this.userId = userId;
 		this.password = password;
 		this.name = name;
@@ -83,8 +86,7 @@ public class User {
 	}
 	
 	public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
-		UserDao userDAO = new UserDao();
-		User user = userDAO.findByUserId(userId);
+		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			throw new UserNotFoundException();
 		}

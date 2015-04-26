@@ -20,7 +20,7 @@
               <li><a href="/users/updateForm">개인정보수정</a></li>              
               </c:when>
               <c:otherwise>
-              <li><a href="/login.jsp">로그인</a></li>
+              <li><a href="/users/login">로그인</a></li>
               <li><a href="/users/createForm">회원가입</a></li> 
               </c:otherwise>
               </c:choose>

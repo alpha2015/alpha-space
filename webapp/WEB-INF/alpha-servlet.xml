@@ -5,7 +5,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- net.alpha.web package에 대해서만 controller를 찾겠다. -->
 	<context:component-scan base-package="net.alpha.web" />
+	
+	<!-- controller를 annotation 기반으로 인지하겠다. -->
 	<mvc:annotation-driven />
 
 	<mvc:resources location="/images/" mapping="/images/**" />

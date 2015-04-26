@@ -4,7 +4,17 @@ import java.util.List;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import core.jdbc.DataAccessException;
+
 public class UserDao extends JdbcDaoSupport {
+
+	// @PostConstruct
+	// public void initialize(){
+	// ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+	// populator.addScript(new ClassPathResource("xxx.sql"));
+	// DatabasePopulatorUtils.execute(populator, getDataSource());
+	// }
+
 	public void addUser(User user) {
 		String sql = "insert into USERS values(?,?,?,?)";
 		getJdbcTemplate().update(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail());
@@ -12,10 +22,14 @@ public class UserDao extends JdbcDaoSupport {
 
 	public User findByUserId(String userId) {
 		String sql = "select * from USERS where userId = ?";
+		try{
 		return getJdbcTemplate().queryForObject(
 				sql,
 				(rs, rowNum) -> new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs
 						.getString("email")), userId);
+		}catch(DataAccessException e){
+			return null;
+		}
 	}
 
 	public List<User> findAllUser() {
