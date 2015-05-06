@@ -34,18 +34,18 @@ public class UserTest {
 	public void login() throws Exception {
 		User user = UserTest.TEST_USER;
 		userDao.addUser(user);
-		assertTrue(User.login(TEST_USER.getUserId(), TEST_USER.getPassword()));
+		assertTrue(user.login(TEST_USER.getUserId(), TEST_USER.getPassword()));
 	}
 	
 	@Test(expected=UserNotFoundException.class)
 	public void loginWhenNotExistedUser() throws Exception {
-		User.login("userId2", TEST_USER.getPassword());
+		TEST_USER.login("userId2", TEST_USER.getPassword());
 	}
 	
 	@Test(expected=PasswordMismatchException.class)
 	public void loginWhenPasswordMismatch() throws Exception {
 		User user = UserTest.TEST_USER;
 		userDao.addUser(user);
-		User.login(TEST_USER.getUserId(), "password2");
+		user.login(TEST_USER.getUserId(), "password2");
 	}
 }

@@ -44,9 +44,8 @@ public class CreateUserServlet {
 			request.setAttribute("errorMessage", errorMessage);
 			return "form";
 		}
-		System.out.println(user);
 		User test = userDao.findByUserId(user.getUserId());
-		if(test != null){
+		if(test.getUserId() != null){
 			request.setAttribute("errorMessage", "이미 존재하는 아이디입니다.");
 			return "form";
 		}

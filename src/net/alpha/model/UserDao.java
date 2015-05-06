@@ -2,6 +2,7 @@ package net.alpha.model;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import core.jdbc.DataAccessException;
@@ -27,8 +28,8 @@ public class UserDao extends JdbcDaoSupport {
 				sql,
 				(rs, rowNum) -> new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs
 						.getString("email")), userId);
-		}catch(DataAccessException e){
-			return null;
+		}catch(EmptyResultDataAccessException | NullPointerException e){
+			return new User();
 		}
 	}
 

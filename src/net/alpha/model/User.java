@@ -11,7 +11,7 @@ import com.google.gson.annotations.Expose;
 public class User {
 	
 	@Autowired
-	private static UserDao userDao;
+	private UserDao userDao;
 	
 	@Expose
 	@NotNull
@@ -36,6 +36,10 @@ public class User {
 		this.password = password;
 		this.name = name;
 		this.email = email;
+	}
+	
+	public User(String userId, String password) {
+		this(userId, password, null,null);
 	}
 	
 	public User() {
@@ -85,13 +89,12 @@ public class User {
 		return this.userId.equals(newUserId);
 	}
 	
-	public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
-		User user = userDao.findByUserId(userId);
-		if (user == null) {
+	public boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
+		if (userId == null) {
 			throw new UserNotFoundException();
 		}
 		
-		if (!user.matchPassword(password)) {
+		if (!matchPassword(password)) {
 			throw new PasswordMismatchException();
 		}
 		

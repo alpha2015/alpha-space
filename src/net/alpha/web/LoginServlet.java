@@ -14,6 +14,7 @@ import net.alpha.model.UserNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,24 +26,26 @@ public class LoginServlet {
 	private UserDao userDao;
 
 	@RequestMapping("/users/login")
-	protected String doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+	protected String doGet(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException,
 			IOException {
+		model.addAttribute("user", new User());
 		return "login";
 	}
 
 	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
-	protected String doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+	protected String doPost(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException,
 			IOException {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
-
 		try {
-			User.login(userId, password);
+			User user = userDao.findByUserId(userId);
+			user.login(user.getUserId(), password);
 			HttpSession session = request.getSession();
 			session.setAttribute(SESSION_USER_ID, userId);
 			return "redirect:/";
 		} catch (UserNotFoundException e) {
-			request.setAttribute("errorMessage", "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
+			model.addAttribute("errorMessage", "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
+			//request.setAttribute("errorMessage", "존재하지 않는 사용자 입니다. 다시 로그인하세요.");
 			return "login";
 		} catch (PasswordMismatchException e) {
 			request.setAttribute("errorMessage", "비밀번호가 틀립니다. 다시 로그인하세요.");
